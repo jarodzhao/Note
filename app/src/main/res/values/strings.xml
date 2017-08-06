@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">随身记</string>
+
+    <!-- 文本标签 -->
+    <string name="note_title_label">标题：</string>
+    <string name="note_content_label">正文内容：</string>
+    <string name="note_favorited_label">加入收藏</string>
+
+    <!-- hint 相关 -->
+    <string name="note_title_hint">请在此处输入记录的标题</string>
+    <string name="note_content_hint">请在此处输入记录的正文内容</string>
+</resources>
