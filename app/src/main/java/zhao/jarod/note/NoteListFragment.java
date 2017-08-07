@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -49,14 +51,39 @@ public class NoteListFragment extends Fragment {
     /**
      * 内部类 Holder
      */
-    private class NoteHolder extends RecyclerView.ViewHolder {
+    private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView mTitleTextView;
+        private TextView mTitleTextView;
+        private TextView mContentTextView;
+        private CheckBox mFavorited;
+
+        private Note mNote;
 
         public NoteHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
 
-            mTitleTextView = (TextView) itemView;
+            mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_note_title_text_view);
+            mContentTextView = (TextView) itemView.findViewById(R.id.list_item_note_content_text_view);
+            mFavorited = (CheckBox) itemView.findViewById(R.id.list_item_note_favorited_check_box);
+        }
+
+        /**
+         * 服务于 onBindViewHolder 的方法
+         *
+         * @param note
+         */
+        public void bindNote(Note note) {
+            mNote = note;
+
+            mTitleTextView.setText(mNote.getmTitle());
+            mContentTextView.setText(mNote.getmContent());
+            mFavorited.setChecked(mNote.isFavorited());
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), mNote.getmTitle(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -74,7 +101,7 @@ public class NoteListFragment extends Fragment {
         @Override
         public NoteHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            View view = layoutInflater.inflate(R.layout.list_item_note, parent, false);
 
             return new NoteHolder(view);
         }
@@ -82,7 +109,9 @@ public class NoteListFragment extends Fragment {
         @Override
         public void onBindViewHolder(NoteHolder holder, int position) {
             Note note = mNotes.get(position);
-            holder.mTitleTextView.setText(note.getmTitle());
+            holder.bindNote(note);
+
+//            holder.mTitleTextView.setText(note.getmTitle());
         }
 
         @Override

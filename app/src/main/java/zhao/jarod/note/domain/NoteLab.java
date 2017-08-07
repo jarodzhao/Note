@@ -26,7 +26,7 @@ public class NoteLab {
 
     private NoteLab(Context context) {
         mNotes = new ArrayList<>();
-        for(int i=0;i<20;i++) {
+        for(int i=0;i<200;i++) {
             Note note = new Note();
             note.setmTitle("测试数据标题 #" + i);
             note.setmContent("测试数据正文内容 #" + i);
