@@ -1,6 +1,8 @@
 package zhao.jarod.note;
 
 import java.text.SimpleDateFormat;
+import java.util.UUID;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -14,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import zhao.jarod.note.domain.Note;
+import zhao.jarod.note.domain.NoteLab;
 
 /**
  * Created by zht on 2017/8/6.
@@ -30,8 +33,11 @@ public class NoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Fragment 的视图并未在此方法中生成，而是在 onCreateView 方法中生成的
-        mNote = new Note();
+//        Fragment 的视图并未在此方法中生成，而是在 onCreateView 方法中生成的
+//        mNote = new Note();
+
+        UUID noteId = (UUID) getActivity().getIntent().getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
+        mNote = NoteLab.get(getActivity()).getNote(noteId);
     }
 
     @Override
@@ -42,7 +48,13 @@ public class NoteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note, container, false);
 
         mTitleField = (EditText) view.findViewById(R.id.note_title);
+        mTitleField.setText(mNote.getmTitle());
+
         mContentField = (EditText) view.findViewById(R.id.note_content);
+        mContentField.setText(mNote.getmContent());
+
+        mFavoritedCheckbox = (CheckBox) view.findViewById(R.id.note_favorited);
+        mFavoritedCheckbox.setChecked(mNote.isFavorited());
 
         //绑定记录标题的动态更改
         mTitleField.addTextChangedListener(new TextWatcher() {

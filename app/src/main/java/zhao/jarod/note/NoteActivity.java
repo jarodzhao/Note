@@ -1,14 +1,20 @@
 package zhao.jarod.note;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.UUID;
+
 /**
  * Created by zht on 2017/8/6.
  */
 public class NoteActivity extends SingleFragmentActivity {
+
+    public static final String EXTRA_NOTE_ID = "zhao.jarod.note.note_id";
 
     @Override
     protected Fragment createFragment() {
@@ -29,5 +35,13 @@ public class NoteActivity extends SingleFragmentActivity {
                     .add(R.id.fragment_container, fragment)
                     .commit();
         }
+    }
+
+    public static Intent newIntent(Context packageContext, UUID noteId) {
+
+        Intent intent = new Intent(packageContext, NoteActivity.class);
+        intent.putExtra(EXTRA_NOTE_ID, noteId);
+
+        return intent;
     }
 }
