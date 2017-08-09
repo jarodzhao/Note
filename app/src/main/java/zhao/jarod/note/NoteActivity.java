@@ -14,11 +14,14 @@ import java.util.UUID;
  */
 public class NoteActivity extends SingleFragmentActivity {
 
-    public static final String EXTRA_NOTE_ID = "zhao.jarod.note.note_id";
+    private static final String EXTRA_NOTE_ID = "zhao.jarod.note.note_id";
 
     @Override
     protected Fragment createFragment() {
-        return new NoteFragment();
+//        return new NoteFragment();
+        UUID noteId = (UUID) getIntent()
+                .getSerializableExtra(EXTRA_NOTE_ID);
+        return NoteFragment.newInstance(noteId);
     }
 
     @Override

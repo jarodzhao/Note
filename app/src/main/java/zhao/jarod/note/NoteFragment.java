@@ -23,6 +23,8 @@ import zhao.jarod.note.domain.NoteLab;
  */
 public class NoteFragment extends Fragment {
 
+    private static final String ARG_NOTE_ID = "note_id";
+
     private Note mNote;
     private EditText mTitleField;
     private EditText mContentField;
@@ -36,7 +38,8 @@ public class NoteFragment extends Fragment {
 //        Fragment 的视图并未在此方法中生成，而是在 onCreateView 方法中生成的
 //        mNote = new Note();
 
-        UUID noteId = (UUID) getActivity().getIntent().getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
+//        UUID noteId = (UUID) getActivity().getIntent().getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
+        UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
         mNote = NoteLab.get(getActivity()).getNote(noteId);
     }
 
@@ -111,5 +114,14 @@ public class NoteFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public static NoteFragment newInstance(UUID noteId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_NOTE_ID, noteId);
+
+        NoteFragment fragment = new NoteFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }
