@@ -41,7 +41,7 @@ public class NoteListFragment extends Fragment {
 
     private void updateUI() {
         NoteLab noteLab = NoteLab.get(getActivity());
-        List<Note> notes = noteLab.getmNotes(); //方法名称和书中不一致，是否需要修改
+        List<Note> notes = noteLab.getmNotes(); //方法名称和书中不一致，是否需要修改？
 
         mAdapter = new NoteAdapter(notes);
         mNoteRecyclerView.setAdapter(mAdapter);
