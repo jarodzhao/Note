@@ -29,6 +29,7 @@ public class NoteActivity extends SingleFragmentActivity {
         return NoteFragment.newInstance(noteId);
     }
 
+    //没有删除,导致在 List 中点击项目打开明细时闪退!!
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);

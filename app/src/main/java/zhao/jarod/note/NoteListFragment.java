@@ -38,6 +38,12 @@ public class NoteListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         NoteLab noteLab = NoteLab.get(getActivity());
         List<Note> notes = noteLab.getmNotes(); //方法名称和书中不一致，是否需要修改？
