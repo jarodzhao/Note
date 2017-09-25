@@ -39,7 +39,7 @@ public class NoteFragment extends Fragment {
 //        mNote = new Note();
 
 //        UUID noteId = (UUID) getActivity().getIntent().getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
-        UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
+        UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID); //================
         mNote = NoteLab.get(getActivity()).getNote(noteId);
     }
 

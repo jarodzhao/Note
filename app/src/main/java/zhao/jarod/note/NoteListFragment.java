@@ -82,7 +82,6 @@ public class NoteListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-//            Toast.makeText(getActivity(), mNote.getmTitle(), Toast.LENGTH_SHORT).show();
             Intent intent = NoteActivity.newIntent(getActivity(), mNote.getmId());
             startActivity(intent);
         }

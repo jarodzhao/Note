@@ -16,30 +16,6 @@ public class NoteActivity extends SingleFragmentActivity {
 
     private static final String EXTRA_NOTE_ID = "zhao.jarod.note.note_id";
 
-    @Override
-    protected Fragment createFragment() {
-//        return new NoteFragment();
-        UUID noteId = (UUID) getIntent()
-                .getSerializableExtra(EXTRA_NOTE_ID);
-        return NoteFragment.newInstance(noteId);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
-
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-
-        if (fragment == null) {
-            fragment = new NoteFragment();
-            fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit();
-        }
-    }
-
     public static Intent newIntent(Context packageContext, UUID noteId) {
 
         Intent intent = new Intent(packageContext, NoteActivity.class);
@@ -47,4 +23,26 @@ public class NoteActivity extends SingleFragmentActivity {
 
         return intent;
     }
+    @Override
+    protected Fragment createFragment() {
+        UUID noteId = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID);
+        return NoteFragment.newInstance(noteId);
+    }
+
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_fragment);
+//
+//        FragmentManager fm = getSupportFragmentManager();
+//        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+//
+//        if (fragment == null) {
+//            fragment = new NoteFragment();
+//            fm.beginTransaction()
+//                    .add(R.id.fragment_container, fragment)
+//                    .commit();
+//        }
+//    }
+
 }
