@@ -41,7 +41,7 @@ public class NoteLab {
 
     public Note getNote(UUID uuid) {
         for (Note note : mNotes) {
-            if (note.getmId().equals(uuid)) {
+            if (note.getId().equals(uuid)) {
                 return note;
             }
         }

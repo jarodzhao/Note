@@ -14,6 +14,8 @@ import java.util.UUID;
  */
 public class NoteActivity extends SingleFragmentActivity {
 
+    //最终被废弃的类，有 NotePagerActivity 替代(使用了 viewpager)
+
     private static final String EXTRA_NOTE_ID = "zhao.jarod.note.note_id";
 
     public static Intent newIntent(Context packageContext, UUID noteId) {
