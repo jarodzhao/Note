@@ -1,12 +1,17 @@
 package zhao.jarod.note;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +29,9 @@ import zhao.jarod.note.domain.NoteLab;
 public class NoteFragment extends Fragment {
 
     private static final String ARG_NOTE_ID = "note_id";
+    private static final String DIALOG_DATE = "DialogDate";
+
+    private static final int REQUEST_DATE = 0;
 
     private Note mNote;
     private EditText mTitleField;
@@ -51,10 +59,10 @@ public class NoteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note, container, false);
 
         mTitleField = (EditText) view.findViewById(R.id.note_title);
-        mTitleField.setText(mNote.getmTitle());
+        mTitleField.setText(mNote.getTitle());
 
         mContentField = (EditText) view.findViewById(R.id.note_content);
-        mContentField.setText(mNote.getmContent());
+        mContentField.setText(mNote.getContent());
 
         mFavoritedCheckbox = (CheckBox) view.findViewById(R.id.note_favorited);
         mFavoritedCheckbox.setChecked(mNote.isFavorited());
@@ -69,7 +77,7 @@ public class NoteFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mNote.setmTitle(charSequence.toString());
+                mNote.setTitle(charSequence.toString());
             }
 
             @Override
@@ -88,7 +96,7 @@ public class NoteFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mNote.setmContent(charSequence.toString());
+                mNote.setContent(charSequence.toString());
             }
 
             @Override
@@ -99,11 +107,20 @@ public class NoteFragment extends Fragment {
 
         mDateButton = (Button) view.findViewById(R.id.note_date);
 
-        //作业：格式化日期
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        updateDate();
+//        mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //显示日期对话框
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = DatePickerFragment.newInstance(mNote.getDate());
 
-        mDateButton.setText(sdf.format(mNote.getmDate()));
-        mDateButton.setEnabled(false);
+                //指定 DatePickerFragment 和 NoteFragment 的关系
+                dialog.setTargetFragment(NoteFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
         mFavoritedCheckbox = (CheckBox) view.findViewById(R.id.note_favorited);
         mFavoritedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -123,5 +140,25 @@ public class NoteFragment extends Fragment {
         NoteFragment fragment = new NoteFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("jarod", resultCode + "");
+
+
+        if (resultCode != Activity.RESULT_OK)
+            return;
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mNote.setDate(date);
+            updateDate();
+        }
+    }
+
+    private void updateDate() {
+        //作业：格式化日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        mDateButton.setText(sdf.format(mNote.getDate()));
     }
 }

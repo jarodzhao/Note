@@ -81,8 +81,8 @@ public class NoteListFragment extends Fragment {
         public void bindNote(Note note) {
             mNote = note;
 
-            mTitleTextView.setText(mNote.getmTitle());
-            mContentTextView.setText(mNote.getmContent());
+            mTitleTextView.setText(mNote.getTitle());
+            mContentTextView.setText(mNote.getContent());
             mFavorited.setChecked(mNote.isFavorited());
         }
 

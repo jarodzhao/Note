@@ -28,8 +28,8 @@ public class NoteLab {
         mNotes = new ArrayList<>();
         for(int i=0;i<200;i++) {
             Note note = new Note();
-            note.setmTitle("测试数据标题 #" + i);
-            note.setmContent("测试数据正文内容 #" + i);
+            note.setTitle("测试数据标题 #" + i);
+            note.setContent("测试数据正文内容 #" + i);
             note.setFavorited(i % 2 == 0);
             mNotes.add(note);
         }
