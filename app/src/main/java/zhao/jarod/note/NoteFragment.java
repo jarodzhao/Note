@@ -51,6 +51,12 @@ public class NoteFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        NoteLab.get(getActivity()).updateNote(mNote);   //为什么在 pause 过程中更新?!
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //此处生成 fragment 的视图,然后返回个调用它的 activity

@@ -24,9 +24,12 @@ public class Note {
 
     //默认构造方法
     public Note(){
-        mId = UUID.randomUUID();
-        mDate = new Date();
+        this(UUID.randomUUID());
+    }
 
+    public Note(UUID id) {
+        mId = id;
+        mDate = new Date();
         mFavorited = false;
     }
 
