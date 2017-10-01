@@ -3,6 +3,7 @@ package zhao.jarod.note;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +28,7 @@ public class NoteListFragment extends Fragment {
 
     private RecyclerView mNoteRecyclerView;
     private NoteAdapter mAdapter;
+    private boolean mSubtitleVisible;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,14 @@ public class NoteListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_note_list, menu);
+
+        //标识子标题菜单项
+        MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);
+        if (mSubtitleVisible) {
+            subtitleItem.setTitle(R.string.hide_subtitle);
+        }else{
+            subtitleItem.setTitle(R.string.show_subtitle);
+        }
     }
 
     @Override
@@ -63,6 +73,11 @@ public class NoteListFragment extends Fragment {
                 Intent intent = NotePagerActivity.newIntent(getActivity(), note.getId());
                 startActivity(intent);
                 return true;
+            case R.id.menu_item_show_subtitle:
+                mSubtitleVisible = !mSubtitleVisible;
+                getActivity().invalidateOptionsMenu();
+                updateSubTitle();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -72,6 +87,22 @@ public class NoteListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+    }
+
+    /**
+     * 显示子标题
+     */
+    private void updateSubTitle(){
+        NoteLab noteLab = NoteLab.get(getActivity());
+        int noteCount = noteLab.getNotes().size();
+        String subtitle = getString(R.string.subtitle_format, noteCount);
+
+        if (!mSubtitleVisible) {
+            subtitle = null;
+        }
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(subtitle); //格式：%1$s notes
     }
 
     private void updateUI() {
