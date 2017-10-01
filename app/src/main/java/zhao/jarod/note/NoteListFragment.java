@@ -2,11 +2,14 @@ package zhao.jarod.note;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -25,9 +28,14 @@ public class NoteListFragment extends Fragment {
     private RecyclerView mNoteRecyclerView;
     private NoteAdapter mAdapter;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true); //Fragment 激活菜单
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         mNoteRecyclerView = (RecyclerView) view.findViewById(R.id.note_recyler_view);
@@ -39,6 +47,28 @@ public class NoteListFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_note_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //工具栏
+        switch (item.getItemId()) {
+            //添加新日记
+            case R.id.menu_item_new_note:
+                Note note = new Note();
+                NoteLab.get(getActivity()).addNote(note);
+                Intent intent = NotePagerActivity.newIntent(getActivity(), note.getId());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         updateUI();
@@ -46,7 +76,7 @@ public class NoteListFragment extends Fragment {
 
     private void updateUI() {
         NoteLab noteLab = NoteLab.get(getActivity());
-        List<Note> notes = noteLab.getmNotes(); //方法名称和书中不一致，是否需要修改？
+        List<Note> notes = noteLab.getNotes(); //方法名称和书中不一致，是否需要修改？
 
         mAdapter = new NoteAdapter(notes);
         mNoteRecyclerView.setAdapter(mAdapter);
@@ -75,7 +105,6 @@ public class NoteListFragment extends Fragment {
 
         /**
          * 服务于 onBindViewHolder 的方法
-         *
          * @param note
          */
         public void bindNote(Note note) {
@@ -83,12 +112,12 @@ public class NoteListFragment extends Fragment {
 
             mTitleTextView.setText(mNote.getTitle());
             mContentTextView.setText(mNote.getContent());
-            mFavorited.setChecked(mNote.isFavorited());
+            mFavorited.setChecked(mNote.isFavorited()); //没有初始化该值，所以会返回错误
+
         }
 
         @Override
         public void onClick(View view) {
-//            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
             Intent intent = NotePagerActivity.newIntent(getActivity(), mNote.getId());
             startActivity(intent);
         }
@@ -117,8 +146,6 @@ public class NoteListFragment extends Fragment {
         public void onBindViewHolder(NoteHolder holder, int position) {
             Note note = mNotes.get(position);
             holder.bindNote(note);
-
-//            holder.mTitleTextView.setText(note.getmTitle());
         }
 
         @Override

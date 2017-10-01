@@ -46,7 +46,6 @@ public class NoteFragment extends Fragment {
 //        Fragment 的视图并未在此方法中生成，而是在 onCreateView 方法中生成的
 //        mNote = new Note();
 
-//        UUID noteId = (UUID) getActivity().getIntent().getSerializableExtra(NoteActivity.EXTRA_NOTE_ID);
         UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID); //================
         mNote = NoteLab.get(getActivity()).getNote(noteId);
     }

@@ -17,6 +17,7 @@ public class NoteLab {
     private List<Note> mNotes;
 
 
+
     public static NoteLab get(Context context) {
         if (sNoteLab == null) {
             sNoteLab = new NoteLab(context);
@@ -26,16 +27,9 @@ public class NoteLab {
 
     private NoteLab(Context context) {
         mNotes = new ArrayList<>();
-        for(int i=0;i<200;i++) {
-            Note note = new Note();
-            note.setTitle("测试数据标题 #" + i);
-            note.setContent("测试数据正文内容 #" + i);
-            note.setFavorited(i % 2 == 0);
-            mNotes.add(note);
-        }
     }
 
-    public List<Note> getmNotes() {
+    public List<Note> getNotes() {
         return mNotes;
     }
 
@@ -46,5 +40,9 @@ public class NoteLab {
             }
         }
         return null;
+    }
+
+    public void addNote(Note note) {
+        mNotes.add(note);
     }
 }

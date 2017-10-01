@@ -22,9 +22,12 @@ public class Note {
 
     private Boolean mFavorited;
 
+    //默认构造方法
     public Note(){
         mId = UUID.randomUUID();
         mDate = new Date();
+
+        mFavorited = false;
     }
 
     public UUID getId() {

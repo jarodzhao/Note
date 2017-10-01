@@ -10,8 +10,15 @@
     <string name="note_title_hint">请在此处输入记录的标题</string>
     <string name="note_content_hint">请在此处输入记录的正文内容</string>
 
-    <!--alert 相关-->
+    <!-- alert 相关-->
     <string name="date_picker_title">创建日期：</string>
+
+    <!-- menu 相关 -->
+    <string name="new_note">新笔记</string>
+    <string name="show_subtitle">显示标题</string>
+    <string name="hide_subtitle">隐藏标题</string>
+    <string name="subtitle_format">%1$s notes</string>
+
 </resources>
 
 
