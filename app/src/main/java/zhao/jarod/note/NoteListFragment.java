@@ -29,6 +29,7 @@ public class NoteListFragment extends Fragment {
     private RecyclerView mNoteRecyclerView;
     private NoteAdapter mAdapter;
     private boolean mSubtitleVisible;
+    private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";    //旋转设备是保存子标题状态
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,11 @@ public class NoteListFragment extends Fragment {
         mNoteRecyclerView = (RecyclerView) view.findViewById(R.id.note_recyler_view);
 
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        if (savedInstanceState != null) {
+            //旋转设备是保存子标题状态
+            mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
+        }
 
         updateUI();
         return view;
@@ -89,6 +95,14 @@ public class NoteListFragment extends Fragment {
         updateUI();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //旋转设备是保存子标题状态
+        outState.putBoolean(SAVED_SUBTITLE_VISIBLE, mSubtitleVisible);
+    }
+
     /**
      * 显示子标题
      */
@@ -112,6 +126,7 @@ public class NoteListFragment extends Fragment {
         mAdapter = new NoteAdapter(notes);
         mNoteRecyclerView.setAdapter(mAdapter);
 
+        updateSubTitle();
     }
 
     /**

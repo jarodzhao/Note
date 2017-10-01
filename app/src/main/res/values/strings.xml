@@ -17,7 +17,7 @@
     <string name="new_note">新笔记</string>
     <string name="show_subtitle">显示标题</string>
     <string name="hide_subtitle">隐藏标题</string>
-    <string name="subtitle_format">%1$s notes</string>
+    <string name="subtitle_format">%1$s 条日记</string>
 
 </resources>
 
