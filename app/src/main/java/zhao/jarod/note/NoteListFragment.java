@@ -63,7 +63,7 @@ public class NoteListFragment extends Fragment {
         MenuItem subtitleItem = menu.findItem(R.id.menu_item_show_subtitle);
         if (mSubtitleVisible) {
             subtitleItem.setTitle(R.string.hide_subtitle);
-        }else{
+        } else {
             subtitleItem.setTitle(R.string.show_subtitle);
         }
     }
@@ -106,7 +106,7 @@ public class NoteListFragment extends Fragment {
     /**
      * 显示子标题
      */
-    private void updateSubTitle(){
+    private void updateSubTitle() {
         NoteLab noteLab = NoteLab.get(getActivity());
         int noteCount = noteLab.getNotes().size();
         String subtitle = getString(R.string.subtitle_format, noteCount);
@@ -123,9 +123,13 @@ public class NoteListFragment extends Fragment {
         NoteLab noteLab = NoteLab.get(getActivity());
         List<Note> notes = noteLab.getNotes(); //方法名称和书中不一致，是否需要修改？
 
-        mAdapter = new NoteAdapter(notes);
-        mNoteRecyclerView.setAdapter(mAdapter);
-
+        if (mAdapter == null) {
+            mAdapter = new NoteAdapter(notes);
+            mNoteRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setNotes(notes);   //到底有没有起作用？参考教材 246 页和 github 上前一版本说明
+            mAdapter.notifyDataSetChanged();
+        }
         updateSubTitle();
     }
 
@@ -151,6 +155,7 @@ public class NoteListFragment extends Fragment {
 
         /**
          * 服务于 onBindViewHolder 的方法
+         *
          * @param note
          */
         public void bindNote(Note note) {
@@ -197,6 +202,11 @@ public class NoteListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mNotes.size();
+        }
+
+        //列表视图中编辑对象后,到明细页面同步更新
+        public void setNotes(List<Note> notes) {
+            mNotes = notes;
         }
     }
 }
