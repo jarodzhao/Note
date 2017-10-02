@@ -13,6 +13,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -59,9 +61,7 @@ public class NoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //此处生成 fragment 的视图,然后返回个调用它的 activity
-        //false 参数决定是否将生成的视图添加到父视图中，此处将以 activity 代码的方式添加视图
-        View view = inflater.inflate(R.layout.fragment_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_note, container, false);     //false 参数决定是否将生成的视图添加到父视图中，此处将以 activity 代码的方式添加视图
 
         mTitleField = (EditText) view.findViewById(R.id.note_title);
         mTitleField.setText(mNote.getTitle());
@@ -113,7 +113,7 @@ public class NoteFragment extends Fragment {
         mDateButton = (Button) view.findViewById(R.id.note_date);
 
         updateDate();
-//        mDateButton.setEnabled(false);
+
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,7 +127,6 @@ public class NoteFragment extends Fragment {
             }
         });
 
-        mFavoritedCheckbox = (CheckBox) view.findViewById(R.id.note_favorited);
         mFavoritedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

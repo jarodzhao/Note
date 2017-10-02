@@ -11,7 +11,7 @@ import zhao.jarod.note.domain.Note;
 import static zhao.jarod.note.database.NoteDbSchema.*;
 
 /**
- * @Description:
+ * @Description:处理游标对象 Cursor
  * @Author:zhaoht
  * @Date: Created in 23:28 2017/10/1
  * @Modified By:

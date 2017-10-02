@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +24,8 @@ public class NotePagerActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private List<Note> mNotes;
+    private UUID noteId;
+    private NoteLab noteLab;
 
     public static Intent newIntent(Context packageContext, UUID noteId) {
         Intent intent = new Intent(packageContext, NotePagerActivity.class);
@@ -33,11 +38,12 @@ public class NotePagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_pager);
 
-        UUID noteId = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID);
+        noteId = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_note_pager_view_pager);
 
-        mNotes = NoteLab.get(this).getNotes();
+        noteLab = NoteLab.get(this);
+        mNotes = noteLab.getNotes();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         mViewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
@@ -60,8 +66,26 @@ public class NotePagerActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem(i);
                 break;
             }
-
-
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.fragment_note, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete:
+                //删除操作，提交操作申请
+                noteLab.deleteNote(noteId.toString());
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,15 +80,47 @@ public class NoteLab {
         }
     }
 
+    /**
+     * 添加对象(操作数据库)
+     *
+     * @param note 单个日记对象
+     */
     public void addNote(Note note) {
+
+        //把 note 对象封装成 ContentValues
         ContentValues values = getContentValues(note);
+
         mDatabase.insert(NoteTable.NAME, null, values);
     }
 
+    /**
+     * 更新对象(操作数据库)
+     *
+     * @param note 日记对象
+     */
     public void updateNote(Note note) {
         String uuidString = note.getId().toString();
         ContentValues values = getContentValues(note);
         mDatabase.update(NoteTable.NAME, values, NoteTable.Cols.UUID + " = ?", new String[]{uuidString});
+    }
+
+    /**
+     * 逻辑删除对象(操作数据库)
+     *
+     * @param id 日记对象的 uuid
+     */
+    public void deleteNote(String id) {
+        //已经有 uuid , 不需要在实例化对象了. 直接作为参数使用即可
+//        String uuidString = note.getId().toString();
+//        ContentValues values = getContentValues(note);
+
+        String whereClause = " uuid = ? ";
+        String[] whereArgs = new String[]{id};
+
+        mDatabase.delete(NoteTable.NAME, whereClause, whereArgs);
+
+        //提示操作信息，并返回列表视图
+        Toast.makeText(mContext, "已删除", Toast.LENGTH_SHORT).show();
     }
 
     private NoteCursorWrapper queryNotes(String whereClause, String[] whereArgs) {
@@ -105,6 +138,11 @@ public class NoteLab {
         return new NoteCursorWrapper(cursor);   //通过 NoteCursorWrapper 封装 cursor
     }
 
+    /**
+     * 封装 note 对象
+     * @param note 日记对象
+     * @return 已经封装好的 ContentValues，db 可直接使用其进行新增和更新等操作
+     */
     private static ContentValues getContentValues(Note note) {
 
         ContentValues values = new ContentValues();

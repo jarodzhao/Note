@@ -18,6 +18,7 @@
     <string name="show_subtitle">显示标题</string>
     <string name="hide_subtitle">隐藏标题</string>
     <string name="subtitle_format">%1$s 条日记</string>
+    <string name="delete_note">删除</string>
 
 </resources>
 

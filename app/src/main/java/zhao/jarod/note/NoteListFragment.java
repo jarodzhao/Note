@@ -79,6 +79,7 @@ public class NoteListFragment extends Fragment {
                 Intent intent = NotePagerActivity.newIntent(getActivity(), note.getId());
                 startActivity(intent);
                 return true;
+            //显示/隐藏工具栏子标题
             case R.id.menu_item_show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
@@ -206,7 +207,7 @@ public class NoteListFragment extends Fragment {
 
         //列表视图中编辑对象后,到明细页面同步更新
         public void setNotes(List<Note> notes) {
-            mNotes = notes;
+            mNotes = notes;     //参考教材 246 页，bug？！
         }
     }
 }
