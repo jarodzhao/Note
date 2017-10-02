@@ -132,7 +132,7 @@ public class NoteLab {
                 whereArgs,
                 null,       //groupBy
                 null,       //having
-                null        //orderBy
+                "_id DESC"        //orderBy
         );
 
         return new NoteCursorWrapper(cursor);   //通过 NoteCursorWrapper 封装 cursor
