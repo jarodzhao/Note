@@ -165,9 +165,12 @@ public class NoteListFragment extends Fragment {
             mTitleTextView.setText(mNote.getTitle());
             mContentTextView.setText(mNote.getContent());
             mFavorited.setChecked(mNote.isFavorited()); //没有初始化该值，所以会返回错误
-
         }
 
+        /**
+         * 明细页面点击后，启动详情页动作
+         * @param view
+         */
         @Override
         public void onClick(View view) {
             Intent intent = NotePagerActivity.newIntent(getActivity(), mNote.getId());

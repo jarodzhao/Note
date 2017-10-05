@@ -44,16 +44,15 @@ public class NotePagerActivity extends AppCompatActivity {
 
         noteLab = NoteLab.get(this);
         mNotes = noteLab.getNotes();
-        FragmentManager fragmentManager = getSupportFragmentManager();
 
+        //viewpager 启动，设置 adapter
+        FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentPagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
-
-                Note note = mNotes.get(position);
+                Note note = mNotes.get(position);   //每个 pager 对应的对象
                 return NoteFragment.newInstance(note.getId());
             }
-
             @Override
             public int getCount() {
                 return mNotes.size();

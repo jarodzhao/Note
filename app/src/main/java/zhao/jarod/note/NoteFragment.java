@@ -61,6 +61,7 @@ public class NoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        //详情页面
         View view = inflater.inflate(R.layout.fragment_note, container, false);     //false 参数决定是否将生成的视图添加到父视图中，此处将以 activity 代码的方式添加视图
 
         mTitleField = (EditText) view.findViewById(R.id.note_title);

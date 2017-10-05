@@ -43,6 +43,10 @@ public class NoteLab {
         mNotes = new ArrayList<>();
     }
 
+    /**
+     * 获取对象集
+     * @return
+     */
     public List<Note> getNotes() {
 
         List<Note> notes = new ArrayList<>();
